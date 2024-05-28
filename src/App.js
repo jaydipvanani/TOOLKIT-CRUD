@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import Add from "./componant/Add";
+import Filter from "./componant/Filter";
+import UserNavbar from "./navbar/UserNavbar";
+import Show from "./componant/Show";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchdata } from "./toolkit/slices/UserSlice";
+
 
 function App() {
+  let dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchdata());
+  }, [dispatch])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <UserNavbar />
+      <Routes>
+        <Route path="/add" element={<Add />} />
+        <Route path="/show" element={<Show />} />
+        <Route path="/filter" element={<Filter />} />
+      </Routes>
+    </>
   );
 }
 
